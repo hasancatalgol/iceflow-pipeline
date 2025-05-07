@@ -2,8 +2,6 @@
 
 ![Project Directory Structure](./pictures/architecture.svg)
 
-> _Screenshot of the local repo layout showing where the `pictures/architecture.svg` lives_
-
 ## 🧩 Services & Ports
 
 | Service                    | Description                                          | Host Port → Container Port |
