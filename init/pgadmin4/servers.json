@@ -1,0 +1,31 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "AirflowBackendDB",
+      "Group": "Local Servers",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "airflow",
+      "Username": "airflow",
+      "SSLMode": "prefer"
+    },
+    "2": {
+      "Name": "DWH",
+      "Group": "Local Servers",
+      "Host": "dwh",
+      "Port": 5432,
+      "MaintenanceDB": "sipay",
+      "Username": "admin",
+      "SSLMode": "prefer"
+    },
+    "3": {
+      "Name": "Hive Metastore DB",
+      "Group": "Local Servers",
+      "Host": "metastore-db",
+      "Port": 5432,
+      "MaintenanceDB": "metastore",
+      "Username": "hive",
+      "SSLMode": "prefer"
+    }
+  }
+}

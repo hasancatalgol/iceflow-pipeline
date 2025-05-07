@@ -1,0 +1,16 @@
+How to kill a Spark Job.
+1) docker exec -it spark-master bash 
+2) ps aux | grep spark
+
+            PID
+root         1  4.8  3.0 4738168 243012 ?      Ssl  10:41   0:21 /usr/lib/jvm/java-17-openjdk-amd64/bin/java -cp /opt/spark/conf/:/opt/spark/jars/* -Xmx1g org.apache.spark.deploy.master.Master
+root       344  347 17.3 4836264 1361928 pts/0 Ssl+ 10:43  17:25 /usr/lib/jvm/java-17-openjdk-amd64/bin/java -cp /opt/spark/conf/:/opt/spark/jars/* -Xmx1g -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED -Djdk.reflect.useDirectMethodHandle=false org.apache.spark.deploy.SparkSubmit /opt/spark/scripts/load_transactions.py
+root       400  0.5  0.6 370524 53756 pts/0    Sl+  10:43   0:01 python3 /opt/spark/scripts/load_transactions.py
+root       483  0.0  0.0    636     4 pts/1    D+   10:48   0:00 grep spark
+
+3) KILL -9 400
+
+Job çalıştırmak
+docker exec -it spark-master spark-submit /opt/spark/scripts/load_transactions.py
+
+SELECT * FROM iceberg.default.transactions  WHERE createddateutc BETWEEN TIMESTAMP '2024-12-01 00:00:00' AND TIMESTAMP '2024-12-03 23:59:59';

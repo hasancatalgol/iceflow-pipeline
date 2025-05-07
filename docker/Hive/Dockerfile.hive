@@ -1,0 +1,14 @@
+FROM apache/hive:4.0.0
+
+USER root
+
+RUN apt-get update && apt-get install -y wget
+
+# Download Hadoop-AWS and AWS Java SDK jars for S3A support
+RUN wget -O /opt/hive/lib/hadoop-aws-3.3.5.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.5/hadoop-aws-3.3.5.jar && \
+    wget -O /opt/hive/lib/aws-java-sdk-bundle-1.11.1026.jar https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.11.1026/aws-java-sdk-bundle-1.11.1026.jar
+
+# Include PostgreSQL JDBC driver
+RUN wget -O /opt/hive/lib/postgresql-42.6.0.jar https://jdbc.postgresql.org/download/postgresql-42.6.0.jar
+
+USER hive

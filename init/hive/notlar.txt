@@ -1,0 +1,6 @@
+Hive Metastore içine girmek.
+1) docker exec -it metastore-db psql -U hive -d metastore
+2) 
+SELECT * FROM "DBS";
+SELECT * FROM "TBLS";
+SELECT c."COLUMN_NAME", c."TYPE_NAME"  FROM "COLUMNS_V2" c  JOIN "SDS" s ON c."CD_ID" = s."CD_ID"  JOIN "TBLS" t ON t."SD_ID" = s."SD_ID"  WHERE t."TBL_NAME" = 'transactions';
