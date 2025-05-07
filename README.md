@@ -11,13 +11,13 @@
 | **Airflow Web UI**         | Airflow API/Web Interface                            | `localhost:8080`            |
 | **Flower**                 | Celery monitoring UI for Airflow                     | `localhost:5555`            |
 | **PostgreSQL (Airflow)**   | Backend DB for Airflow                               | _Internal only_             |
-| **PostgreSQL (DWH)**       | Your data warehouse database (`sipay`)               | `localhost:5432`            |
+| **PostgreSQL (DWH)**       | Your data warehouse database                | `localhost:5432`            |
 | **pgAdmin**                | GUI for managing PostgreSQL                          | `localhost:5050`            |
 | **Redis**                  | Celery broker for Airflow                            | _Internal only_             |
 | **Spark Master**           | Spark master node & UI                               | `localhost:7077` (RPC), `localhost:8081` (UI) |
-| **Spark Worker 1**         | Spark executor                                       | _Internal only_             |
-| **Spark Worker 2**         | Spark executor                                       | _Internal only_             |
-| **Iceberg REST**           | Iceberg REST Catalog server                          | `localhost:8181`            |
+| **Spark Worker 1**         | Spark executor(Inactive)                                       | _Internal only_             |
+| **Spark Worker 2**         | Spark executor(Inactive)                                       | _Internal only_             |
+| **Hive Metastore Catalog**           | Hive Metastore                          | `localhost:8181`            |
 | **MinIO**                  | S3-compatible object storage                         | `localhost:9000` (API), `localhost:9001` (Console) |
 | **MinIO Client (mc)**      | Initializes MinIO bucket & policy                    | _Internal only_             |
 
@@ -39,7 +39,7 @@
 - **Spark Cluster** with custom Iceberg support and REST catalog.  
 - **MinIO** as S3-compatible storage for Iceberg tables.  
 - **pgAdmin** for local PostgreSQL interaction.  
-- **REST-based Iceberg Catalog** for easier Flink/Spark/Trino integration.  
+- **Hive Metastore Catalog** for easier Flink/Spark/Trino integration and meta data management.
 
 ---
 

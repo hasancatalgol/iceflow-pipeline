@@ -37,7 +37,7 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
   networks:
-      - sipay-net
+      - test-net
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -62,7 +62,7 @@ services:
       start_period: 5s
     restart: always
     networks:
-      - sipay-net
+      - test-net
   redis:
     # Redis is limited to 7.2-bookworm due to licencing change
     # https://redis.io/blog/redis-adopts-dual-source-available-licensing/
@@ -78,7 +78,7 @@ services:
       start_period: 30s
     restart: always
     networks:
-      - sipay-net
+      - test-net
   airflow-apiserver:
     <<: *airflow-common
     command: api-server
@@ -256,7 +256,7 @@ services:
       dwh:
         condition: service_healthy
     networks:
-      - sipay-net
+      - test-net
   dwh:
     image: postgres:15-alpine
     profiles: ["dwh"]
@@ -275,7 +275,7 @@ services:
       - dwh_data:/var/lib/postgresql/data
       - ./init/dwh:/docker-entrypoint-initdb.d
     networks:
-      sipay-net:
+      test-net:
   pgadmin:
     image: dpage/pgadmin4:9.2.0
     profiles: ["dwh"]
@@ -288,7 +288,7 @@ services:
       - pgadmin_data:/var/lib/pgadmin
       - ./init/pgadmin4/servers.json:/pgadmin4/servers.json
     networks:
-      sipay-net:
+      test-net:
   spark-master:
     profiles: ["iceberg"]
     build:
@@ -308,7 +308,7 @@ services:
       - "8081:8080"  # Spark master UI
       #- "7077:7077"   Spark Cluster master port.
     networks:
-      - sipay-net
+      - test-net
     volumes:
       - ./warehouse:/home/iceberg/warehouse
       - ./scripts:/opt/spark/scripts
@@ -334,7 +334,7 @@ services:
   #   depends_on:
   #     - spark-master
   #   networks:
-  #     - sipay-net
+  #     - test-net
   #   volumes:
   #     - ./warehouse:/home/iceberg/warehouse
   #     - ./scripts:/opt/spark/scripts
@@ -359,7 +359,7 @@ services:
   #   depends_on:
   #     - spark-master
   #   networks:
-  #     - sipay-net
+  #     - test-net
   #   volumes:
   #     - ./warehouse:/home/iceberg/warehouse
   #     - ./scripts:/opt/spark/scripts
@@ -386,7 +386,7 @@ services:
       /opt/hive/bin/hive --service metastore
       "
     networks:
-      - sipay-net
+      - test-net
     depends_on:
       - metastore-db
     volumes:
@@ -403,7 +403,7 @@ services:
     ports:
       - "5434:5432"
     networks:
-      - sipay-net
+      - test-net
     volumes:
       - hive_metastore_db:/var/lib/postgresql/data 
   minio:
@@ -415,7 +415,7 @@ services:
       - MINIO_ROOT_PASSWORD=password
       - MINIO_DOMAIN=minio
     networks:
-      sipay-net:
+      test-net:
         aliases:
           - warehouse.minio
     ports:
@@ -429,7 +429,7 @@ services:
     image: minio/mc
     container_name: mc
     networks:
-      sipay-net:
+      test-net:
     environment:
       - AWS_ACCESS_KEY_ID=admin
       - AWS_SECRET_ACCESS_KEY=password
@@ -448,7 +448,7 @@ services:
     ports:
       - "8082:8080"
     networks:
-      - sipay-net
+      - test-net
     volumes:
       - ./init/trino/etc:/etc/trino
     depends_on:
@@ -465,5 +465,5 @@ volumes:
   
   
 networks:
-  sipay-net:
+  test-net:
     driver: bridge
